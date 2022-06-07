@@ -12,7 +12,6 @@ public class Customer
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
     [Required]
-    [EmailAddress(ErrorMessage = "Entered Email is not Valid!")]
     public string Email { get; set; }
     [Required]
     public string Firstname { get; set; }
@@ -20,7 +19,6 @@ public class Customer
     public string Lastname { get; set; }
     [Required]
     public DateTime DateOfBirth { get; set; }
-    [Phone(ErrorMessage = "Entered Phone Number is not Valid!")]
     [MaxLength(15)]
     /*[RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Mobile Number Format Is Invalid!")]*/
     public string PhoneNumber { get; set; }

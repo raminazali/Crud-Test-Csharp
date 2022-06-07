@@ -5,6 +5,4 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application;
-public class MediatConfiguration
-{
-}
+public record MediatConfiguration;

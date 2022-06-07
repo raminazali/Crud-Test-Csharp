@@ -25,6 +25,7 @@ public interface ICustomerRepository
     /// <param name="expression"> Example  => (x => x.Id == Id) </param>
     /// <returns></returns>
     Task<Customer> FilterGet(Expression<Func<Customer, bool>> expression);
+    Task<Customer> GetById(int id);
     /// <summary>
     ///     Add Async the Customer To The Database
     /// </summary>

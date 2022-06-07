@@ -16,7 +16,7 @@ public class GetCustomerByIdHandler : IRequestHandler<GetCustomerByIdQuery, Cust
     }
     public async Task<Customer> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
     {
-        Customer customer = await _repository.FilterGet(x => x.Id == request.Id);
+        Customer customer = await _repository.GetById(request.Id);
         return customer;
     }
 }

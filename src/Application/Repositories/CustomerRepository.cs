@@ -51,4 +51,6 @@ public class CustomerRepository : ICustomerRepository
     {
         await _context.SaveChangesAsync();
     }
+
+    public async Task<Customer> GetById(int id) => await _context.Customers.FirstOrDefaultAsync(x => x.Id == id);
 }

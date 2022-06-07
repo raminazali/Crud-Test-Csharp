@@ -12,24 +12,25 @@ using Moq;
 using Shouldly;
 
 namespace CrudTest.Application.Test.CustomerTypes.Queries;
-public class GetCustomerRepositoryHandlerTests
+public class GetByIdQueriesHandlerTests
 {
     /// <summary>
     ///  At These Test I Used Moq , Shouldly And xunitCore Packages For My Testing Porposes
     /// </summary>
     private readonly Mock<ICustomerRepository> _mockRepo;
-    public GetCustomerRepositoryHandlerTests()
+    public GetByIdQueriesHandlerTests()
     {
         _mockRepo = MockCustomerRepository.GetCustomerRepository();
     }
-    [Fact]
-    public async Task CustomersList_ShouldNotBeNull_ShouldBeOfTypeListOfCustomer()
-    {
-        var handler = new GetAllCustomerQueryHandler(_mockRepo.Object);
 
-        var result = await handler.Handle(new GetAllCustomerQuery(), CancellationToken.None);
-        result.ShouldBeOfType<List<Customer>>();
+    [Theory]
+    [InlineData(1)]
+    public async Task GetByCustomerByIdThree(int CustomerId)
+    {
+        var handler = new GetCustomerByIdHandler(_mockRepo.Object);
+
+        var result = await handler.Handle(new GetCustomerByIdQuery(CustomerId), CancellationToken.None);
         result.ShouldNotBeNull();
-        result.Count.ShouldBe(3);
+        result.ShouldBeOfType<CleanArchitecture.Domain.Models.Customer>();
     }
 }
