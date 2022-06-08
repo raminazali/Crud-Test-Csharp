@@ -36,34 +36,66 @@ public class UpdateCustomerHandlerTests
         };
     }
     // Because this Update Method Is Void Method And there is no Response i Can Just Check My Exception That may happens 
+    [Fact]
+    public async Task Customer_Update_WithValidData()
+    {
+        var result = await _handler.Handle(new UpdateCustomerCommand(_customer) { }, CancellationToken.None);
+
+        var Customers = await _mockRepo.Object.GetList();
+
+        result.ShouldBeTrue();
+
+        result.ShouldBeOfType<bool>();
+
+        Customers.Count.ShouldBe(3);
+    }
 
     [Theory]
-    [InlineData("sakr21nbjnjnawsa")]
-    public async Task Customer_Update_InvalidEmail(string InvalidEmail)
+    [InlineData(false,"sgasgsag")]
+    public async Task Customer_Update_InvalidEmail(bool Expected, string InvalidEmail)
     {
         _customer.Email = InvalidEmail;
-        NotValidEmail ex = await Should.ThrowAsync<NotValidEmail>(() => _handler.Handle(new UpdateCustomerCommand(_customer) { }, CancellationToken.None));
-        var resultCount = await _mockRepo.Object.GetList();
-        resultCount.Count.ShouldBe(3);
+        var result = await _handler.Handle(new UpdateCustomerCommand(_customer) { }, CancellationToken.None);
+
+        var Customers = await _mockRepo.Object.GetList();
+
+        result.ShouldBe(Expected);
+
+        result.ShouldBeOfType<bool>();
+
+        Customers.Count.ShouldBe(3);
     }
 
     [Theory]
-    [InlineData("1234568789")]
-    public async Task Customer_Update_InvalidPhoneNumber(string PhoneNumber)
+    [InlineData(false,"1234568789")]
+    public async Task Customer_Update_InvalidPhoneNumber(bool Expected, string PhoneNumber)
     {
         _customer.PhoneNumber = PhoneNumber;
-        NotValidEmail ex = await Should.ThrowAsync<NotValidEmail>(() => _handler.Handle(new UpdateCustomerCommand(_customer) { }, CancellationToken.None));
-        var resultCount = await _mockRepo.Object.GetList();
-        resultCount.Count.ShouldBe(3);
+        var result = await _handler.Handle(new UpdateCustomerCommand(_customer) { }, CancellationToken.None);
+
+        var Customers = await _mockRepo.Object.GetList();
+
+        result.ShouldBe(Expected);
+
+        result.ShouldBeOfType<bool>();
+
+        Customers.Count.ShouldBe(3);
     }
 
     [Theory]
-    [InlineData("345435748641")]
-    public async Task Customer_Update_InvalidBankAccountNumber(string BankAccountNumber)
+    [InlineData(false,"345435748641")]
+    public async Task Customer_Update_InvalidBankAccountNumber(bool Expected,string BankAccountNumber)
     {
         _customer.BankAccountNumber = BankAccountNumber;
-        NotValidEmail ex = await Should.ThrowAsync<NotValidEmail>(() => _handler.Handle(new UpdateCustomerCommand(_customer) { }, CancellationToken.None));
-        var resultCount = await _mockRepo.Object.GetList();
-        resultCount.Count.ShouldBe(3);
+
+        var result = await _handler.Handle(new UpdateCustomerCommand(_customer) { }, CancellationToken.None);
+
+        var Customers = await _mockRepo.Object.GetList();
+
+        result.ShouldBe(Expected);
+
+        result.ShouldBeOfType<bool>();
+
+        Customers.Count.ShouldBe(3);
     }
 }
